@@ -1,4 +1,4 @@
-package org.pustule.fanfarepustule;
+package org.pustule.fanfarepustule.base;
 
 import android.content.Context;
 import android.support.v7.app.AppCompatActivity;

@@ -3,7 +3,7 @@ package org.pustule.fanfarepustule;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 
-public class HomeActivity extends AppCompatActivity {
+public class HomeActivity extends BaseActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

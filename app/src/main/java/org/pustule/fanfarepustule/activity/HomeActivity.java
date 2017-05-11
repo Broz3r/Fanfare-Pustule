@@ -1,7 +1,9 @@
-package org.pustule.fanfarepustule;
+package org.pustule.fanfarepustule.activity;
 
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+
+import org.pustule.fanfarepustule.R;
+import org.pustule.fanfarepustule.base.BaseActivity;
 
 public class HomeActivity extends BaseActivity {
 

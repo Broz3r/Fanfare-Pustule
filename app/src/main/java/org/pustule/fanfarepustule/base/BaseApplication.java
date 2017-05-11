@@ -1,6 +1,8 @@
-package org.pustule.fanfarepustule;
+package org.pustule.fanfarepustule.base;
 
 import android.app.Application;
+
+import org.pustule.fanfarepustule.R;
 
 import uk.co.chrisjenx.calligraphy.CalligraphyConfig;
 

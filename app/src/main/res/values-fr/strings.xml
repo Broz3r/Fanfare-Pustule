@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Fanfare Pustule</string>
+
+    <string name="home_string">La fanfare qui decapsule !</string>
+    <string name="home_button_sheets">Partitions</string>
+    <string name="home_button_musics">Morceaux</string>
+    <string name="home_label_next_event">Prochain évenement :</string>
+</resources>

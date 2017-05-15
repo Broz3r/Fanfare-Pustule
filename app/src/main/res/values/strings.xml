@@ -1,3 +1,8 @@
 <resources>
-    <string name="app_name">Fanfare Pustule</string>
+    <string name="app_name">Pustule Brass Band</string>
+
+    <string name="home_subtitle">La fanfare qui decapsule !</string>
+    <string name="home_button_sheets">Sheets</string>
+    <string name="home_button_musics">Musics</string>
+    <string name="home_label_next_event">Next event:</string>
 </resources>

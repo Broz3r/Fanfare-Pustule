@@ -1,12 +1,17 @@
 package org.pustule.fanfarepustule.activities;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.annotation.Nullable;
+import android.support.v4.app.ActivityCompat;
+import android.support.v4.app.ActivityOptionsCompat;
+import android.widget.ImageView;
 
 import org.pustule.fanfarepustule.R;
 import org.pustule.fanfarepustule.base.BaseActivity;
-import org.pustule.fanfarepustule.utils.NavigationUtils;
+
+import butterknife.BindView;
 
 /**
  * Created by Paul Mougin on 16/05/2017.
@@ -15,6 +20,8 @@ import org.pustule.fanfarepustule.utils.NavigationUtils;
 public class LoadingActivity extends BaseActivity {
 
     private static final int DELAY = 2000;
+
+    @BindView(R.id.image) ImageView imageView;
 
     @Override
     protected int getLayoutRes() {
@@ -29,9 +36,23 @@ public class LoadingActivity extends BaseActivity {
         handler.postDelayed(new Runnable() {
             @Override
             public void run() {
-                NavigationUtils.launchHomeActivity(LoadingActivity.this);
+                launchHomeActivity();
                 finish();
             }
         }, DELAY);
+    }
+
+    private void launchHomeActivity() {
+        final Intent intent = new Intent(this, HomeActivity.class);
+
+        final String transitionName = getString(R.string.transition_string_loading_home);
+        ActivityOptionsCompat options =
+
+                ActivityOptionsCompat.makeSceneTransitionAnimation(this,
+                        imageView,   // Starting view
+                        transitionName    // The String
+                );
+
+        ActivityCompat.startActivity(this, intent, options.toBundle());
     }
 }

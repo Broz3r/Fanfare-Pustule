@@ -18,4 +18,8 @@
         <item name="android:foreground">?android:attr/selectableItemBackground</item>
     </style>
 
+    <style name="CircularProgress" parent="Theme.AppCompat.Light">
+        <item name="colorAccent">@android:color/black</item>
+    </style>
+
 </resources>

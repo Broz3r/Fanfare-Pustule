@@ -12,7 +12,7 @@
     android:clipToPadding="false"
     android:divider="@drawable/divider_standard"
     android:showDividers="middle"
-    tools:context="org.pustule.fanfarepustule.activity.HomeActivity"
+    tools:context="org.pustule.fanfarepustule.activities.HomeActivity"
     tools:ignore="MissingPrefix">
 
     <android.support.v4.widget.Space
@@ -26,7 +26,9 @@
         android:layout_gravity="center_horizontal"
         app:srcCompat="@drawable/home"
         android:layout_marginTop="16dp"
-        android:contentDescription="@null"/>
+        android:contentDescription="@null"
+
+        android:transitionName="@string/transition_string_loading_home"/>
 
     <TextView
         android:layout_width="wrap_content"

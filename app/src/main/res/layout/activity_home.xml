@@ -12,7 +12,7 @@
     android:clipToPadding="false"
     android:divider="@drawable/divider_standard"
     android:showDividers="middle"
-    tools:context="org.pustule.fanfarepustule.activity.HomeActivity"
+    tools:context="org.pustule.fanfarepustule.activities.HomeActivity"
     tools:ignore="MissingPrefix">
 
     <android.support.v4.widget.Space

@@ -1,4 +1,4 @@
-package org.pustule.fanfarepustule.activity;
+package org.pustule.fanfarepustule.activities;
 
 import android.os.Bundle;
 

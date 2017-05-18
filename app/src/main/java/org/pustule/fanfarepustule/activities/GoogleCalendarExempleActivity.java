@@ -33,6 +33,7 @@ import com.google.api.client.json.jackson2.JacksonFactory;
 import com.google.api.client.util.DateTime;
 import com.google.api.client.util.ExponentialBackOff;
 import com.google.api.services.calendar.CalendarScopes;
+import com.google.api.services.calendar.model.CalendarListEntry;
 import com.google.api.services.calendar.model.Event;
 import com.google.api.services.calendar.model.Events;
 
@@ -44,8 +45,7 @@ import java.util.List;
 import pub.devrel.easypermissions.AfterPermissionGranted;
 import pub.devrel.easypermissions.EasyPermissions;
 
-public class GoogleCalendarExempleActivity extends Activity
-        implements EasyPermissions.PermissionCallbacks {
+public class GoogleCalendarExempleActivity extends Activity implements EasyPermissions.PermissionCallbacks {
     GoogleAccountCredential mCredential;
     private TextView mOutputText;
     private Button mCallApiButton;
@@ -325,7 +325,7 @@ public class GoogleCalendarExempleActivity extends Activity
             JsonFactory jsonFactory = JacksonFactory.getDefaultInstance();
             mService = new com.google.api.services.calendar.Calendar.Builder(
                     transport, jsonFactory, credential)
-                    .setApplicationName("Google Calendar API Android Quickstart")
+                    .setApplicationName("Fanfare Pustule")
                     .build();
         }
 
@@ -351,9 +351,13 @@ public class GoogleCalendarExempleActivity extends Activity
          */
         private List<String> getDataFromApi() throws IOException {
             // List the next 10 events from the primary calendar.
+            CalendarListEntry gracieCal = new CalendarListEntry();
+            gracieCal.setId("75c4061rn1t05hjeff2rjdp9r8@group.calendar.google.com");
+            mService.calendarList().insert(gracieCal);
+
             DateTime now = new DateTime(System.currentTimeMillis());
-            List<String> eventStrings = new ArrayList<String>();
-            Events events = mService.events().list("primary")
+            List<String> eventStrings = new ArrayList<>();
+            Events events = mService.events().list(gracieCal.getId())
                     .setMaxResults(10)
                     .setTimeMin(now)
                     .setOrderBy("startTime")

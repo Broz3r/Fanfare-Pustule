@@ -15,16 +15,15 @@ import android.util.Log;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GoogleApiAvailability;
 import com.google.api.client.extensions.android.http.AndroidHttp;
-import com.google.api.client.googleapis.extensions.android.gms.auth.GoogleAccountCredential;
+import com.google.api.client.googleapis.auth.oauth2.GoogleCredential;
 import com.google.api.client.googleapis.extensions.android.gms.auth.GooglePlayServicesAvailabilityIOException;
 import com.google.api.client.googleapis.extensions.android.gms.auth.UserRecoverableAuthIOException;
 import com.google.api.client.http.HttpTransport;
 import com.google.api.client.json.JsonFactory;
 import com.google.api.client.json.jackson2.JacksonFactory;
 import com.google.api.client.util.DateTime;
-import com.google.api.client.util.ExponentialBackOff;
+import com.google.api.services.calendar.Calendar;
 import com.google.api.services.calendar.CalendarScopes;
-import com.google.api.services.calendar.model.CalendarListEntry;
 import com.google.api.services.calendar.model.Event;
 import com.google.api.services.calendar.model.Events;
 
@@ -33,7 +32,7 @@ import org.pustule.fanfarepustule.base.BaseActivity;
 
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 
 import butterknife.OnClick;
@@ -44,9 +43,7 @@ public class HomeActivity extends BaseActivity {
 
     static final int REQUEST_GOOGLE_PLAY_SERVICES = 1002;
 
-    private static final String[] SCOPES = { CalendarScopes.CALENDAR_READONLY };
-
-    GoogleAccountCredential mCredential;
+    GoogleCredential mCredential;
     ProgressDialog mProgress;
 
     @Override
@@ -62,10 +59,12 @@ public class HomeActivity extends BaseActivity {
         mProgress.setMessage("Calling Google Calendar API ...");
 
         // Initialize credentials and service object.
-        mCredential = GoogleAccountCredential.usingOAuth2(
-                getApplicationContext(), Arrays.asList(SCOPES))
-                .setBackOff(new ExponentialBackOff())
-                .setSelectedAccountName("Paul");
+        try {
+            mCredential = GoogleCredential.fromStream(getAssets().open("fanfare_pustule_133ac261ac5e.json"))
+                    .createScoped(Collections.singleton(CalendarScopes.CALENDAR_READONLY));
+        } catch (IOException e) {
+            Log.e(TAG, e.getLocalizedMessage());
+        }
     }
 
     private void getEventFromCalendarApi() {
@@ -172,11 +171,11 @@ public class HomeActivity extends BaseActivity {
         private com.google.api.services.calendar.Calendar mService = null;
         private Exception mLastError = null;
 
-        MakeRequestTask(GoogleAccountCredential credential) {
+        MakeRequestTask(GoogleCredential credential) {
             HttpTransport transport = AndroidHttp.newCompatibleTransport();
             JsonFactory jsonFactory = JacksonFactory.getDefaultInstance();
-            mService = new com.google.api.services.calendar.Calendar.Builder(
-                    transport, jsonFactory, credential)
+
+            mService = new Calendar.Builder(transport, jsonFactory, credential)
                     .setApplicationName("Fanfare Pustule")
                     .build();
 
@@ -204,19 +203,19 @@ public class HomeActivity extends BaseActivity {
          */
         private List<String> getDataFromApi() throws IOException {
             // List the next 10 events from the fanfare calendar.
-            CalendarListEntry gracieCal = new CalendarListEntry();
-            gracieCal.setId("75c4061rn1t05hjeff2rjdp9r8@group.calendar.google.com");
-            mService.calendarList().insert(gracieCal);
 
             DateTime now = new DateTime(System.currentTimeMillis());
             List<String> eventStrings = new ArrayList<>();
-            Events events = mService.events().list("primary")
+            Events events = mService.events().list("75c4061rn1t05hjeff2rjdp9r8@group.calendar.google.com")
                     .setMaxResults(10)
                     .setTimeMin(now)
                     .setOrderBy("startTime")
                     .setSingleEvents(true)
+                    .setShowDeleted(false)
                     .execute();
             List<Event> items = events.getItems();
+
+            Log.i(TAG, "### " + items.size());
 
             for (Event event : items) {
                 DateTime start = event.getStart().getDateTime();

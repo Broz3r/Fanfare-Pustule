@@ -15,6 +15,7 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.text.TextUtils;
 import android.text.method.ScrollingMovementMethod;
+import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
@@ -33,7 +34,6 @@ import com.google.api.client.json.jackson2.JacksonFactory;
 import com.google.api.client.util.DateTime;
 import com.google.api.client.util.ExponentialBackOff;
 import com.google.api.services.calendar.CalendarScopes;
-import com.google.api.services.calendar.model.CalendarListEntry;
 import com.google.api.services.calendar.model.Event;
 import com.google.api.services.calendar.model.Events;
 
@@ -351,19 +351,18 @@ public class GoogleCalendarExempleActivity extends Activity implements EasyPermi
          */
         private List<String> getDataFromApi() throws IOException {
             // List the next 10 events from the primary calendar.
-            CalendarListEntry gracieCal = new CalendarListEntry();
-            gracieCal.setId("75c4061rn1t05hjeff2rjdp9r8@group.calendar.google.com");
-            mService.calendarList().insert(gracieCal);
 
             DateTime now = new DateTime(System.currentTimeMillis());
             List<String> eventStrings = new ArrayList<>();
-            Events events = mService.events().list(gracieCal.getId())
+            Events events = mService.events().list("jon8kk6sut8bbvsor3ds95kucc@group.calendar.google.com")
                     .setMaxResults(10)
                     .setTimeMin(now)
                     .setOrderBy("startTime")
                     .setSingleEvents(true)
                     .execute();
             List<Event> items = events.getItems();
+
+            Log.i("#", "### " + items.size());
 
             for (Event event : items) {
                 DateTime start = event.getStart().getDateTime();

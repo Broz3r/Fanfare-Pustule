@@ -1,0 +1,12 @@
+{
+  "type": "service_account",
+  "project_id": "fanfare-pustule",
+  "private_key_id": "133ac261ac5e030078a947e3ff1a7e42154d61f5",
+  "private_key": "-----BEGIN PRIVATE KEY-----\nMIIEvgIBADANBgkqhkiG9w0BAQEFAASCBKgwggSkAgEAAoIBAQCsIqcFa+llnG7O\nUIBSa2VkrcavM3g6EpBr8Eni7Ce0SA6KgwjfNSx4hRe9nZYVEbpJxKCfoH3mm+Me\n+9n749Qd63jrSIwA/9N3JyZuOzYfSHp4CNemFwgVsUg0FH2enQfOAPuX0vFnooGw\n0sj/SoSoNRiDsA85ZHSy5h+6TjogONRxmJ0P8FBo1s1ebCxeIK1R41h/iHZlIymc\nBRXL8TCkGRMiBZ0t76u9UYb2el9lCdboIwhVL+YHDWfsa3tpaG5iLlau3pYG2oup\n5HYvgISGk3GIhLagJ3Dc4opiqZg+Xdqexk852PC7t6UpzLP6tHADo+HmOaDDdThN\nqAM6Uo2VAgMBAAECggEAHlVN6ufo/WmrYgpwDnYT7EGuLy4J++vNDORPVOBqH7wJ\n6fEs1U6Uu1kyxYx5R9Wzpu+yIWcCAKsMQye88kUj2jDmQknqt/tc65SX0ll3UFxw\njmn6fG93EoGG2Hya5WJFH5FvRIIc3bcWlQ8T8d7TESQoIX6bNDEmWmcwhJ9n4Ujw\nZ04bvV+VCti7UYcFFPGBjgpxKgor95uMMI+TgpzNqjNgk1hBQXwxT76h8O01Ud5i\nNe0PP3Dda2CITIo7SG0LCSLIgnh45t6VaWkbHjp1IYsY4lb4s6iJTWCR2uL9AjCZ\np0RiCeoVADsZXYZO226P/4P2VPBjmSG+vB5qINNr8QKBgQDaBYxWQ0p4Ic7Ybj1g\nvF1FsHlAldcrMgjfe1ul1+UjVrQzvAJMUuU+4GL7crp5u8LJdBmyFIhOORNbbEA/\ncuS3ybHidBZxk+DSw3DLzOYd7IA16Qvwf0On4XlkXsgPSymA8SvbiLCxPFtVT1gu\nr+669rg/h7DOhjLgZGDzok8IUQKBgQDKHtn5K9vOdYf6YrHusfiMzD8aCSapa1yp\naNvuk9o28VhUxdmKQziDxh4mWsxpEJ7khrvarXgvxoedJMS+c1FpcJWOCCRU8VaV\nkmOVNVeZMTcPz7t5JT7vro4tvzByJyffslXMvxpib8qq7zR/7vbdJ3oukOdiaZAs\noiVvDNwkBQKBgQDPQM7zgexc3uae380BFI8mHGhneQmeSmYc7EtnECEGwvly5Jra\nq0K5ztzJY3rZFiBJGVED9HjOw3sfQXyh1DqQa+/p8akUNxtVv+yOEC4A7D3FAdET\nwicyhCi9vUw5HZ5KsPicLQiqs1Gve0m8uAodOURVQExXR0M+BK4VbInswQKBgH3o\nNA6U9Ksq6dbezkqMEPHcdd6JHs1g9OsPSBnZfpDFTSoZyYbokvb7XmK0Iyu7z885\n4yG49+qC+I26jti4y1ksae19QuyrHi20cFZNUVE7qDowRG+V9RunmCgFNm+V1q/x\nzqLp1MzHKO/MbN7ZBG0Fn4YMfCcA7W/wXfNMhoHlAoGBAI4mgXAubpYbVgI+V2LL\nbvGkMdibVhF9DTAlDzoY4+iB8CaE6qoZSAPeHnOIUbUSWAkG9iItHbOidGxR3cWA\nB6Z88/18CiPmVQ3kTJOKCTVsKz0SH3UOGlOgotswY7+qOMraEYYzvzanrFapr+8K\nLj083q40cK2J9d0LJTKGIfam\n-----END PRIVATE KEY-----\n",
+  "client_email": "calendar-admin@fanfare-pustule.iam.gserviceaccount.com",
+  "client_id": "106979619026547027529",
+  "auth_uri": "https://accounts.google.com/o/oauth2/auth",
+  "token_uri": "https://accounts.google.com/o/oauth2/token",
+  "auth_provider_x509_cert_url": "https://www.googleapis.com/oauth2/v1/certs",
+  "client_x509_cert_url": "https://www.googleapis.com/robot/v1/metadata/x509/calendar-admin%40fanfare-pustule.iam.gserviceaccount.com"
+}

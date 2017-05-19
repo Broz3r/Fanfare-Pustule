@@ -25,6 +25,7 @@ import com.google.api.services.calendar.Calendar;
 import com.google.api.services.calendar.CalendarScopes;
 import com.google.api.services.calendar.model.Event;
 import com.google.api.services.calendar.model.Events;
+import com.google.firebase.crash.FirebaseCrash;
 
 import org.pustule.fanfarepustule.R;
 import org.pustule.fanfarepustule.base.BaseActivity;
@@ -161,6 +162,11 @@ public class HomeActivity extends BaseActivity {
     @OnClick(R.id.retry_button)
     public void onRetryButtonClicked() {
         getEventFromCalendarApi();
+    }
+
+    @OnClick(R.id.musics_button)
+    public void onMusicsButtonClicked() {
+        FirebaseCrash.report(new Exception("My first Android non-fatal error"));
     }
 
     //endregion

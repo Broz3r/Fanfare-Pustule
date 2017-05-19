@@ -25,7 +25,6 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
         app:srcCompat="@drawable/home"
-        android:layout_marginTop="16dp"
         android:contentDescription="@null"
 
         android:transitionName="@string/transition_string_loading_home"/>
@@ -64,7 +63,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
-                android:layout_gravity="center">
+                android:layout_gravity="center"
+                android:paddingBottom="@dimen/spacing_extra_large">
 
                 <ProgressBar
                     android:theme="@style/CircularProgress"
@@ -84,7 +84,8 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="vertical">
+                android:orientation="vertical"
+                android:paddingBottom="@dimen/spacing_std">
 
                 <TextView
                     android:id="@+id/event_title"
@@ -105,6 +106,47 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/spacing_std"
                     android:textColor="@android:color/black"/>
+                
+                <android.support.v4.widget.Space
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/spacing_large" />
+
+                <Button
+                    android:id="@+id/go_button"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="end"
+                    android:layout_marginTop="@dimen/spacing_std"
+                    android:text="Y aller"
+                    style="@style/Widget.AppCompat.Button.Borderless"
+                    android:visibility="gone"/>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical"
+                android:paddingBottom="@dimen/spacing_std">
+
+                <TextView
+                    android:id="@+id/error_view"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center_horizontal"/>
+
+                <android.support.v4.widget.Space
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_weight="1"/>
+
+                <Button
+                    android:id="@+id/retry_button"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="end"
+                    android:text="Réessayer"
+                    style="@style/Widget.AppCompat.Button.Borderless"/>
 
             </LinearLayout>
 

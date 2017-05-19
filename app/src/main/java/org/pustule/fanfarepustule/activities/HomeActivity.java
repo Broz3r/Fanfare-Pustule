@@ -36,6 +36,7 @@ import java.util.Collections;
 import java.util.List;
 
 import butterknife.BindView;
+import butterknife.OnClick;
 
 public class HomeActivity extends BaseActivity {
 
@@ -45,6 +46,7 @@ public class HomeActivity extends BaseActivity {
 
     static final int LOADING_VIEW = 0;
     static final int EVENT_VIEW = 1;
+    static final int ERROR_VIEW = 2;
 
     GoogleCredential mCredential;
 
@@ -53,6 +55,8 @@ public class HomeActivity extends BaseActivity {
     @BindView(R.id.event_title) protected TextView eventTitleView;
     @BindView(R.id.event_subtitle) protected TextView eventSubtitleView;
     @BindView(R.id.event_detail) protected TextView eventDetailView;
+
+    @BindView(R.id.error_view) protected TextView errorView;
 
     @Override
     protected int getLayoutRes() {
@@ -82,8 +86,8 @@ public class HomeActivity extends BaseActivity {
         if (! isGooglePlayServicesAvailable()) {
             acquireGooglePlayServices();
         } else if (! isDeviceOnline()) {
-            // TODO: Error no connection
-            Log.e(TAG, "No network connection available.");
+            cardViewFlipper.setDisplayedChild(ERROR_VIEW);
+            errorView.setText("No network connection available.");
         } else {
             new MakeRequestTask(mCredential).execute();
         }
@@ -153,6 +157,11 @@ public class HomeActivity extends BaseActivity {
     }
 
     //region Clicked Listener
+
+    @OnClick(R.id.retry_button)
+    public void onRetryButtonClicked() {
+        getEventFromCalendarApi();
+    }
 
     //endregion
 
@@ -236,24 +245,26 @@ public class HomeActivity extends BaseActivity {
                 eventDetailView.setText(event.getDescription());
             }
             else {
-                // TODO: Error no Event
-                Log.e(TAG, "There is no next event");
+                cardViewFlipper.setDisplayedChild(ERROR_VIEW);
+                errorView.setText("Il n'y a pas de prochain événement disponible dans l'agenda");
             }
         }
 
         @Override
         protected void onCancelled() {
-            // TODO: Error unknown
+            cardViewFlipper.setDisplayedChild(ERROR_VIEW);
             if (mLastError != null) {
                 if (mLastError instanceof GooglePlayServicesAvailabilityIOException) {
                     showGooglePlayServicesAvailabilityErrorDialog(
                             ((GooglePlayServicesAvailabilityIOException) mLastError)
                                     .getConnectionStatusCode());
                 } else {
+                    errorView.setText("Une erreur inconnue est survenue.");
                     Log.e(TAG, "The following error occurred:\n"
                             + mLastError.getMessage());
                 }
             } else {
+                errorView.setText("La recherche à été annulée");
                 Log.e(TAG, "Request cancelled.");
             }
         }

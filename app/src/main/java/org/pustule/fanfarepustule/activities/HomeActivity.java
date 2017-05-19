@@ -163,6 +163,11 @@ public class HomeActivity extends BaseActivity {
         getEventFromCalendarApi();
     }
 
+    @OnClick(R.id.musics_button)
+    public void onMusicsButtonClicked() {
+        
+    }
+
     //endregion
 
     //region Tasks

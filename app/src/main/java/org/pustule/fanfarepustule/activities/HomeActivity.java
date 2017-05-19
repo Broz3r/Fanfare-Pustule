@@ -17,7 +17,6 @@ import com.google.android.gms.common.GoogleApiAvailability;
 import com.google.api.client.extensions.android.http.AndroidHttp;
 import com.google.api.client.googleapis.auth.oauth2.GoogleCredential;
 import com.google.api.client.googleapis.extensions.android.gms.auth.GooglePlayServicesAvailabilityIOException;
-import com.google.api.client.googleapis.extensions.android.gms.auth.UserRecoverableAuthIOException;
 import com.google.api.client.http.HttpTransport;
 import com.google.api.client.json.JsonFactory;
 import com.google.api.client.json.jackson2.JacksonFactory;
@@ -148,12 +147,6 @@ public class HomeActivity extends BaseActivity {
 
     //region Clicked Listener
 
-    @OnClick(R.id.sheets_button)
-    public void onSheetsButtonCLicked() {
-        final Intent intent = new Intent(this, GoogleCalendarExempleActivity.class);
-        startActivity(intent);
-    }
-
     @OnClick(R.id.musics_button)
     public void onMusicsButtonClicked() {
         getEventFromCalendarApi();
@@ -255,10 +248,6 @@ public class HomeActivity extends BaseActivity {
                     showGooglePlayServicesAvailabilityErrorDialog(
                             ((GooglePlayServicesAvailabilityIOException) mLastError)
                                     .getConnectionStatusCode());
-                } else if (mLastError instanceof UserRecoverableAuthIOException) {
-                    startActivityForResult(
-                            ((UserRecoverableAuthIOException) mLastError).getIntent(),
-                            GoogleCalendarExempleActivity.REQUEST_AUTHORIZATION);
                 } else {
                     Log.e(TAG, "The following error occurred:\n"
                             + mLastError.getMessage());

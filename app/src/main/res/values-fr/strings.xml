@@ -2,8 +2,18 @@
 <resources>
     <string name="app_name">Fanfare Pustule</string>
 
-    <string name="home_string">La fanfare qui decapsule !</string>
+    <string name="home_subtitle">La fanfare qui decapsule !</string>
+
     <string name="home_button_sheets">Partitions</string>
     <string name="home_button_musics">Morceaux</string>
+    <string name="home_button_retry">Réessayer</string>
+    <string name="home_button_lets_go">Y aller</string>
+
     <string name="home_label_next_event">Prochain évenement :</string>
+    <string name="home_label_search">Recherche le prochain événement…</string>
+
+    <string name="error_no_connection">Réseau indisponnible, merci de vérifier votre connexion internet et de réessayer.</string>
+    <string name="error_no_event">Il n\'y a pas de prochain événement pour le moment.</string>
+    <string name="error_unknown">Une erreur inconnue est survenue, merci de réessayer ultérieurement.</string>
+    <string name="error_cancel">La requête à été annulée, merci de ressayer.</string>
 </resources>

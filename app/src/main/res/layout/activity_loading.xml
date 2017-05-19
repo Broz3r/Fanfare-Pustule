@@ -14,7 +14,6 @@
         android:layout_height="wrap_content"
         android:layout_centerInParent="true"
         app:srcCompat="@drawable/home"
-        android:layout_marginTop="16dp"
         android:contentDescription="@null"
 
         android:transitionName="@string/transition_string_loading_home"/>

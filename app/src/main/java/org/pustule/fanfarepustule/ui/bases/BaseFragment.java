@@ -1,5 +1,6 @@
 package org.pustule.fanfarepustule.ui.bases;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.LayoutRes;
 import android.support.annotation.Nullable;
@@ -41,5 +42,9 @@ public abstract class BaseFragment extends Fragment {
 
     protected void bindView(View root) {
         isViewInflated = true;
+    }
+
+    public void handleActivityResponse(int resultCode, Intent data) {
+
     }
 }

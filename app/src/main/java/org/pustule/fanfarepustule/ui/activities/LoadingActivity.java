@@ -1,4 +1,4 @@
-package org.pustule.fanfarepustule.activities;
+package org.pustule.fanfarepustule.ui.activities;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -9,7 +9,7 @@ import android.support.v4.app.ActivityOptionsCompat;
 import android.widget.ImageView;
 
 import org.pustule.fanfarepustule.R;
-import org.pustule.fanfarepustule.base.BaseActivity;
+import org.pustule.fanfarepustule.ui.bases.BaseActivity;
 
 import butterknife.BindView;
 

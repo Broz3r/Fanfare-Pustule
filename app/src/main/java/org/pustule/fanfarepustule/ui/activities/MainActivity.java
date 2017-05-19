@@ -1,4 +1,4 @@
-package org.pustule.fanfarepustule.activities;
+package org.pustule.fanfarepustule.ui.activities;
 
 import android.app.Dialog;
 import android.content.Context;
@@ -27,7 +27,7 @@ import com.google.api.services.calendar.model.Event;
 import com.google.api.services.calendar.model.Events;
 
 import org.pustule.fanfarepustule.R;
-import org.pustule.fanfarepustule.base.BaseActivity;
+import org.pustule.fanfarepustule.ui.bases.BaseActivity;
 import org.pustule.fanfarepustule.utils.DateHelper;
 import org.pustule.fanfarepustule.utils.StringHelper;
 

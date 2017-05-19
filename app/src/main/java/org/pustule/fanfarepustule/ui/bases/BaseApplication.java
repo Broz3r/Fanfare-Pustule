@@ -1,4 +1,4 @@
-package org.pustule.fanfarepustule.base;
+package org.pustule.fanfarepustule.ui.bases;
 
 import android.app.Application;
 

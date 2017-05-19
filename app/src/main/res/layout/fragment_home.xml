@@ -12,7 +12,6 @@
     android:clipToPadding="false"
     android:divider="@drawable/divider_standard"
     android:showDividers="middle"
-    tools:context="org.pustule.fanfarepustule.activities.HomeActivity"
     tools:ignore="MissingPrefix">
 
     <android.support.v4.widget.Space
@@ -41,7 +40,7 @@
     <android.support.v4.widget.Space
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="2"/>
+        android:layout_weight="1"/>
 
     <TextView
         android:layout_width="wrap_content"
@@ -106,7 +105,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/spacing_std"
                     android:textColor="@android:color/black"/>
-                
+
                 <android.support.v4.widget.Space
                     android:layout_width="match_parent"
                     android:layout_height="@dimen/spacing_large" />
@@ -157,28 +156,6 @@
     <android.support.v4.widget.Space
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="1"/>
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-
-        <Button
-            android:id="@+id/sheets_button"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="@string/home_button_sheets"
-            style="@style/Widget.AppCompat.Button.Borderless"/>
-
-        <Button
-            android:id="@+id/musics_button"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="@string/home_button_musics"
-            style="@style/Widget.AppCompat.Button.Borderless"/>
-
-    </LinearLayout>
+        android:layout_weight="2"/>
 
 </LinearLayout>

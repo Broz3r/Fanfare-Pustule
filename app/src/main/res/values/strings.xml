@@ -3,10 +3,12 @@
 
     <string name="transition_string_loading_home" translatable="false">transition_string_loading_home</string>
 
-    <string name="home_subtitle">La fanfare qui decapsule !</string>
+    <string name="menu_title_home">Home</string>
+    <string name="menu_title_events">Events</string>
+    <string name="menu_title_sheets">Sheets</string>
+    <string name="menu_title_musics">Musics</string>
 
-    <string name="home_button_sheets">Sheets</string>
-    <string name="home_button_musics">Musics</string>
+    <string name="home_subtitle">La fanfare qui decapsule !</string>
 
     <string name="home_button_retry">Retry</string>
     <string name="home_button_lets_go">Let\'s go !</string>

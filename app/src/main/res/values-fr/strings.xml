@@ -2,10 +2,13 @@
 <resources>
     <string name="app_name">Fanfare Pustule</string>
 
+    <string name="menu_title_home">Home</string>
+    <string name="menu_title_events">Événements</string>
+    <string name="menu_title_sheets">Partitions</string>
+    <string name="menu_title_musics">Morceaux</string>
+
     <string name="home_subtitle">La fanfare qui decapsule !</string>
 
-    <string name="home_button_sheets">Partitions</string>
-    <string name="home_button_musics">Morceaux</string>
     <string name="home_button_retry">Réessayer</string>
     <string name="home_button_lets_go">Y aller</string>
 

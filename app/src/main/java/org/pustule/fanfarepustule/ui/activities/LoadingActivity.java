@@ -1,4 +1,4 @@
-package org.pustule.fanfarepustule.activities;
+package org.pustule.fanfarepustule.ui.activities;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -9,7 +9,7 @@ import android.support.v4.app.ActivityOptionsCompat;
 import android.widget.ImageView;
 
 import org.pustule.fanfarepustule.R;
-import org.pustule.fanfarepustule.base.BaseActivity;
+import org.pustule.fanfarepustule.ui.bases.BaseActivity;
 
 import butterknife.BindView;
 
@@ -43,7 +43,7 @@ public class LoadingActivity extends BaseActivity {
     }
 
     private void launchHomeActivity() {
-        final Intent intent = new Intent(this, HomeActivity.class);
+        final Intent intent = new Intent(this, MainActivity.class);
 
         final String transitionName = getString(R.string.transition_string_loading_home);
         ActivityOptionsCompat options =

@@ -1,19 +1,12 @@
-package org.pustule.fanfarepustule.activities;
+package org.pustule.fanfarepustule.ui.fragments;
 
-import android.app.Dialog;
-import android.content.Context;
 import android.content.Intent;
-import android.net.ConnectivityManager;
-import android.net.NetworkInfo;
 import android.os.AsyncTask;
-import android.os.Bundle;
-import android.support.annotation.Nullable;
 import android.util.Log;
+import android.view.View;
 import android.widget.TextView;
 import android.widget.ViewFlipper;
 
-import com.google.android.gms.common.ConnectionResult;
-import com.google.android.gms.common.GoogleApiAvailability;
 import com.google.api.client.extensions.android.http.AndroidHttp;
 import com.google.api.client.googleapis.auth.oauth2.GoogleCredential;
 import com.google.api.client.googleapis.extensions.android.gms.auth.GooglePlayServicesAvailabilityIOException;
@@ -27,8 +20,9 @@ import com.google.api.services.calendar.model.Event;
 import com.google.api.services.calendar.model.Events;
 
 import org.pustule.fanfarepustule.R;
-import org.pustule.fanfarepustule.base.BaseActivity;
+import org.pustule.fanfarepustule.ui.bases.BaseFragment;
 import org.pustule.fanfarepustule.utils.DateHelper;
+import org.pustule.fanfarepustule.utils.DeviceUtils;
 import org.pustule.fanfarepustule.utils.StringHelper;
 
 import java.io.IOException;
@@ -38,17 +32,19 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.OnClick;
 
-public class HomeActivity extends BaseActivity {
+import static android.app.Activity.RESULT_OK;
 
-    private static final String TAG = HomeActivity.class.getSimpleName();
+/**
+ * Created by Paul Mougin on 19/05/2017.
+ */
 
-    static final int REQUEST_GOOGLE_PLAY_SERVICES = 1002;
+public class HomeFragment extends BaseFragment {
+
+    private static final String TAG = HomeFragment.class.getSimpleName();
 
     static final int LOADING_VIEW = 0;
     static final int EVENT_VIEW = 1;
     static final int ERROR_VIEW = 2;
-
-    GoogleCredential mCredential;
 
     @BindView(R.id.card_flipper_view) protected ViewFlipper cardViewFlipper;
 
@@ -58,48 +54,40 @@ public class HomeActivity extends BaseActivity {
 
     @BindView(R.id.error_view) protected TextView errorView;
 
+    GoogleCredential mCredential;
+
     @Override
     protected int getLayoutRes() {
-        return R.layout.activity_home;
+        return R.layout.fragment_home;
     }
 
     @Override
-    protected void onCreate(@Nullable Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
+    protected void bindView(View root) {
+        super.bindView(root);
 
         // Initialize credentials and service object.
         try {
-            mCredential = GoogleCredential.fromStream(getAssets().open("fanfare_pustule_133ac261ac5e.json"))
+            mCredential = GoogleCredential.fromStream(getContext().getAssets().open("fanfare_pustule_133ac261ac5e.json"))
                     .createScoped(Collections.singleton(CalendarScopes.CALENDAR_READONLY));
         } catch (IOException e) {
+            // TODO: Handle error Credential
             Log.e(TAG, e.getLocalizedMessage());
         }
     }
 
     @Override
-    protected void onPostResume() {
-        super.onPostResume();
+    public void onResume() {
+        super.onResume();
         getEventFromCalendarApi();
     }
 
-    private void getEventFromCalendarApi() {
-        if (! isGooglePlayServicesAvailable()) {
-            acquireGooglePlayServices();
-        } else if (! isDeviceOnline()) {
-            cardViewFlipper.setDisplayedChild(ERROR_VIEW);
-            errorView.setText(getString(R.string.error_no_connection));
-        } else {
-            new MakeRequestTask(mCredential).execute();
-        }
-    }
-
     @Override
-    protected void onActivityResult(
-            int requestCode, int resultCode, Intent data) {
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         switch(requestCode) {
-            case REQUEST_GOOGLE_PLAY_SERVICES:
+            case DeviceUtils.REQUEST_GOOGLE_PLAY_SERVICES:
                 if (resultCode != RESULT_OK) {
+                    // TODO: Handle Missing Google Play Service Error
                     Log.e(TAG, "Missing Google Play Services");
                 } else {
                     getEventFromCalendarApi();
@@ -108,52 +96,13 @@ public class HomeActivity extends BaseActivity {
         }
     }
 
-    /**
-     * Checks whether the device currently has a network connection.
-     * @return true if the device has a network connection, false otherwise.
-     */
-    private boolean isDeviceOnline() {
-        ConnectivityManager connMgr = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
-        NetworkInfo networkInfo = connMgr.getActiveNetworkInfo();
-        return (networkInfo != null && networkInfo.isConnected());
-    }
-
-    /**
-     * Check that Google Play services APK is installed and up to date.
-     * @return true if Google Play Services is available and up to
-     *     date on this device; false otherwise.
-     */
-    private boolean isGooglePlayServicesAvailable() {
-        GoogleApiAvailability apiAvailability = GoogleApiAvailability.getInstance();
-        final int connectionStatusCode = apiAvailability.isGooglePlayServicesAvailable(this);
-        return connectionStatusCode == ConnectionResult.SUCCESS;
-    }
-
-    /**
-     * Attempt to resolve a missing, out-of-date, invalid or disabled Google
-     * Play Services installation via a user dialog, if possible.
-     */
-    private void acquireGooglePlayServices() {
-        GoogleApiAvailability apiAvailability = GoogleApiAvailability.getInstance();
-        final int connectionStatusCode = apiAvailability.isGooglePlayServicesAvailable(this);
-        if (apiAvailability.isUserResolvableError(connectionStatusCode)) {
-            showGooglePlayServicesAvailabilityErrorDialog(connectionStatusCode);
+    private void getEventFromCalendarApi() {
+        if (!DeviceUtils.isDeviceOnline(getContext())) {
+            cardViewFlipper.setDisplayedChild(ERROR_VIEW);
+            errorView.setText(getString(R.string.error_no_connection));
+        } else {
+            new MakeRequestTask(mCredential).execute();
         }
-    }
-
-    /**
-     * Display an error dialog showing that Google Play Services is missing
-     * or out of date.
-     * @param connectionStatusCode code describing the presence (or lack of)
-     *     Google Play Services on this device.
-     */
-    void showGooglePlayServicesAvailabilityErrorDialog(final int connectionStatusCode) {
-        GoogleApiAvailability apiAvailability = GoogleApiAvailability.getInstance();
-        Dialog dialog = apiAvailability.getErrorDialog(
-                HomeActivity.this,
-                connectionStatusCode,
-                REQUEST_GOOGLE_PLAY_SERVICES);
-        dialog.show();
     }
 
     //region Clicked Listener
@@ -161,11 +110,6 @@ public class HomeActivity extends BaseActivity {
     @OnClick(R.id.retry_button)
     public void onRetryButtonClicked() {
         getEventFromCalendarApi();
-    }
-
-    @OnClick(R.id.musics_button)
-    public void onMusicsButtonClicked() {
-        
     }
 
     //endregion
@@ -260,9 +204,9 @@ public class HomeActivity extends BaseActivity {
             cardViewFlipper.setDisplayedChild(ERROR_VIEW);
             if (mLastError != null) {
                 if (mLastError instanceof GooglePlayServicesAvailabilityIOException) {
-                    showGooglePlayServicesAvailabilityErrorDialog(
-                            ((GooglePlayServicesAvailabilityIOException) mLastError)
-                                    .getConnectionStatusCode());
+                    DeviceUtils.showGooglePlayServicesAvailabilityErrorDialog(
+                            ((GooglePlayServicesAvailabilityIOException) mLastError).getConnectionStatusCode(),
+                            getActivity());
                 } else {
                     errorView.setText(getString(R.string.error_unknown));
                     Log.e(TAG, "The following error occurred:\n"

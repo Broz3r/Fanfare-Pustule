@@ -4,7 +4,7 @@
 
     <string name="menu_title_home">Home</string>
     <string name="menu_title_events">Événements</string>
-    <string name="menu_title_sheets">Paritions</string>
+    <string name="menu_title_sheets">Partitions</string>
     <string name="menu_title_musics">Morceaux</string>
 
     <string name="home_subtitle">La fanfare qui decapsule !</string>

@@ -1,0 +1,21 @@
+<resources>
+    <string name="app_name">Pustule Brass Band</string>
+
+    <string name="transition_string_loading_home" translatable="false">transition_string_loading_home</string>
+
+    <string name="home_subtitle">La fanfare qui decapsule !</string>
+
+    <string name="home_button_sheets">Sheets</string>
+    <string name="home_button_musics">Musics</string>
+
+    <string name="home_button_retry">Retry</string>
+    <string name="home_button_lets_go">Let\'s go !</string>
+
+    <string name="home_label_next_event">Next event:</string>
+    <string name="home_label_search">Search for the next event…</string>
+
+    <string name="error_no_connection">No network connection available, please verify your internet connection and retry.</string>
+    <string name="error_no_event">There is no next event for the moment.</string>
+    <string name="error_unknown">An unknown error is occurred, please try again latter.</string>
+    <string name="error_cancel">The request was canceled, please retry.</string>
+</resources>

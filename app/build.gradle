@@ -1,0 +1,48 @@
+apply plugin: 'com.android.application'
+
+android {
+    compileSdkVersion 25
+    buildToolsVersion "25.0.3"
+    defaultConfig {
+        applicationId "org.pustule.fanfarepustule"
+        minSdkVersion 19
+        targetSdkVersion 25
+        versionCode 2
+        versionName "0.1-alpha"
+        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+    }
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+    }
+}
+
+ext.supportLibVersion = '25.3.1'
+ext.butterknifeLibVersion = '8.5.1'
+
+dependencies {
+    compile fileTree(dir: 'libs', include: ['*.jar'])
+
+    compile "com.android.support:appcompat-v7:$supportLibVersion"
+    compile "com.android.support:cardview-v7:$supportLibVersion"
+
+    compile 'com.google.android.gms:play-services-auth:10.2.6'
+    compile 'pub.devrel:easypermissions:0.2.1'
+    compile('com.google.api-client:google-api-client-android:1.22.0') {
+        exclude group: 'org.apache.httpcomponents'
+    }
+    compile('com.google.apis:google-api-services-calendar:v3-rev245-1.22.0') {
+        exclude group: 'org.apache.httpcomponents'
+    }
+
+    compile 'uk.co.chrisjenx:calligraphy:2.2.0'
+
+    compile "com.jakewharton:butterknife:$butterknifeLibVersion"
+    annotationProcessor "com.jakewharton:butterknife-compiler:$butterknifeLibVersion"
+
+    compile 'com.google.firebase:firebase-crash:10.2.6'
+}
+
+apply plugin: 'com.google.gms.google-services'

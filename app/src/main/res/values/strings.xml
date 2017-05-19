@@ -1,7 +1,7 @@
 <resources>
     <string name="app_name">Pustule Brass Band</string>
 
-    <string name="transition_string_loading_home">transition_string_loading_home</string>
+    <string name="transition_string_loading_home" translatable="false">transition_string_loading_home</string>
 
     <string name="home_subtitle">La fanfare qui decapsule !</string>
 

@@ -9,8 +9,8 @@ import android.net.NetworkInfo;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.text.TextUtils;
 import android.util.Log;
+import android.widget.TextView;
 
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GoogleApiAvailability;
@@ -28,12 +28,14 @@ import com.google.api.services.calendar.model.Events;
 
 import org.pustule.fanfarepustule.R;
 import org.pustule.fanfarepustule.base.BaseActivity;
+import org.pustule.fanfarepustule.utils.DateHelper;
+import org.pustule.fanfarepustule.utils.StringHelper;
 
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
+import butterknife.BindView;
 import butterknife.OnClick;
 
 public class HomeActivity extends BaseActivity {
@@ -44,6 +46,10 @@ public class HomeActivity extends BaseActivity {
 
     GoogleCredential mCredential;
     ProgressDialog mProgress;
+
+    @BindView(R.id.event_title) protected TextView eventTitleView;
+    @BindView(R.id.event_subtitle) protected TextView eventSubtitleView;
+    @BindView(R.id.event_detail) protected TextView eventDetailView;
 
     @Override
     protected int getLayoutRes() {
@@ -160,7 +166,7 @@ public class HomeActivity extends BaseActivity {
      * An asynchronous task that handles the Google Calendar API call.
      * Placing the API calls in their own task ensures the UI stays responsive.
      */
-    private class MakeRequestTask extends AsyncTask<Void, Void, List<String>> {
+    private class MakeRequestTask extends AsyncTask<Void, Void, Event> {
         private com.google.api.services.calendar.Calendar mService = null;
         private Exception mLastError = null;
 
@@ -179,9 +185,9 @@ public class HomeActivity extends BaseActivity {
          * @param params no parameters needed for this task.
          */
         @Override
-        protected List<String> doInBackground(Void... params) {
+        protected Event doInBackground(Void... params) {
             try {
-                return getDataFromApi();
+                return getNextEventFromApi();
             } catch (Exception e) {
                 mLastError = e;
                 cancel(true);
@@ -190,17 +196,16 @@ public class HomeActivity extends BaseActivity {
         }
 
         /**
-         * Fetch a list of the next 10 events from the primary calendar.
-         * @return List of Strings describing returned events.
+         * Fetch the next event from the fanfare calendar.
+         * @return next event of the calendar.
          * @throws IOException
          */
-        private List<String> getDataFromApi() throws IOException {
-            // List the next 10 events from the fanfare calendar.
+        private Event getNextEventFromApi() throws IOException {
+            // List the next event from the fanfare calendar.
 
             DateTime now = new DateTime(System.currentTimeMillis());
-            List<String> eventStrings = new ArrayList<>();
             Events events = mService.events().list("75c4061rn1t05hjeff2rjdp9r8@group.calendar.google.com")
-                    .setMaxResults(10)
+                    .setMaxResults(1)
                     .setTimeMin(now)
                     .setOrderBy("startTime")
                     .setSingleEvents(true)
@@ -208,19 +213,7 @@ public class HomeActivity extends BaseActivity {
                     .execute();
             List<Event> items = events.getItems();
 
-            Log.i(TAG, "### " + items.size());
-
-            for (Event event : items) {
-                DateTime start = event.getStart().getDateTime();
-                if (start == null) {
-                    // All-day events don't have start times, so just use
-                    // the start date.
-                    start = event.getStart().getDate();
-                }
-                eventStrings.add(
-                        String.format("%s (%s)", event.getSummary(), start));
-            }
-            return eventStrings;
+            return items.get(0);
         }
 
 
@@ -230,13 +223,24 @@ public class HomeActivity extends BaseActivity {
         }
 
         @Override
-        protected void onPostExecute(List<String> output) {
+        protected void onPostExecute(Event event) {
             mProgress.hide();
-            if (output == null || output.size() == 0) {
-                Log.i(TAG, "No results returned.");
-            } else {
-                output.add(0, "Data retrieved using the Google Calendar API:");
-                Log.i(TAG, TextUtils.join("\n", output));
+            if (event != null) {
+                eventTitleView.setText(event.getSummary());
+                // Subtitle as Start Date and location
+
+                String subtitle;
+                DateTime startDateTime = event.getStart().getDate() != null ? event.getStart().getDate() : event.getStart().getDateTime();
+                subtitle = DateHelper.getDateFormattedFromDateTime(startDateTime);
+                String location = event.getLocation();
+                if (!StringHelper.isEmptyOrNull(location)) {
+                    subtitle += " - " + location;
+                }
+                eventSubtitleView.setText(subtitle);
+                eventDetailView.setText(event.getDescription());
+            }
+            else {
+                Log.e(TAG, "There is no next event");
             }
         }
 

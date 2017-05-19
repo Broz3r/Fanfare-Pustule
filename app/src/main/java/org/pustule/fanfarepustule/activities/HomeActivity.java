@@ -87,7 +87,7 @@ public class HomeActivity extends BaseActivity {
             acquireGooglePlayServices();
         } else if (! isDeviceOnline()) {
             cardViewFlipper.setDisplayedChild(ERROR_VIEW);
-            errorView.setText("No network connection available.");
+            errorView.setText(getString(R.string.error_no_connection));
         } else {
             new MakeRequestTask(mCredential).execute();
         }
@@ -246,7 +246,7 @@ public class HomeActivity extends BaseActivity {
             }
             else {
                 cardViewFlipper.setDisplayedChild(ERROR_VIEW);
-                errorView.setText("Il n'y a pas de prochain événement disponible dans l'agenda");
+                errorView.setText(getString(R.string.error_no_event));
             }
         }
 
@@ -259,12 +259,12 @@ public class HomeActivity extends BaseActivity {
                             ((GooglePlayServicesAvailabilityIOException) mLastError)
                                     .getConnectionStatusCode());
                 } else {
-                    errorView.setText("Une erreur inconnue est survenue.");
+                    errorView.setText(getString(R.string.error_unknown));
                     Log.e(TAG, "The following error occurred:\n"
                             + mLastError.getMessage());
                 }
             } else {
-                errorView.setText("La recherche à été annulée");
+                errorView.setText(getString(R.string.error_cancel));
                 Log.e(TAG, "Request cancelled.");
             }
         }

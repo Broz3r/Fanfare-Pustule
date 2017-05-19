@@ -77,7 +77,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:gravity="center_horizontal"
-                    android:text="Recherche le prochain événement..."/>
+                    android:text="@string/home_label_search"/>
 
             </LinearLayout>
 
@@ -117,7 +117,7 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="end"
                     android:layout_marginTop="@dimen/spacing_std"
-                    android:text="Y aller"
+                    android:text="@string/home_button_lets_go"
                     style="@style/Widget.AppCompat.Button.Borderless"
                     android:visibility="gone"/>
 
@@ -145,7 +145,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="end"
-                    android:text="Réessayer"
+                    android:text="@string/home_button_retry"
                     style="@style/Widget.AppCompat.Button.Borderless"/>
 
             </LinearLayout>

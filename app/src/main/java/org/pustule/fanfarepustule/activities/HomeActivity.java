@@ -1,7 +1,6 @@
 package org.pustule.fanfarepustule.activities;
 
 import android.app.Dialog;
-import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.net.ConnectivityManager;
@@ -11,6 +10,7 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.util.Log;
 import android.widget.TextView;
+import android.widget.ViewFlipper;
 
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GoogleApiAvailability;
@@ -36,7 +36,6 @@ import java.util.Collections;
 import java.util.List;
 
 import butterknife.BindView;
-import butterknife.OnClick;
 
 public class HomeActivity extends BaseActivity {
 
@@ -44,8 +43,12 @@ public class HomeActivity extends BaseActivity {
 
     static final int REQUEST_GOOGLE_PLAY_SERVICES = 1002;
 
+    static final int LOADING_VIEW = 0;
+    static final int EVENT_VIEW = 1;
+
     GoogleCredential mCredential;
-    ProgressDialog mProgress;
+
+    @BindView(R.id.card_flipper_view) protected ViewFlipper cardViewFlipper;
 
     @BindView(R.id.event_title) protected TextView eventTitleView;
     @BindView(R.id.event_subtitle) protected TextView eventSubtitleView;
@@ -60,9 +63,6 @@ public class HomeActivity extends BaseActivity {
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        mProgress = new ProgressDialog(this);
-        mProgress.setMessage("Calling Google Calendar API ...");
-
         // Initialize credentials and service object.
         try {
             mCredential = GoogleCredential.fromStream(getAssets().open("fanfare_pustule_133ac261ac5e.json"))
@@ -72,10 +72,17 @@ public class HomeActivity extends BaseActivity {
         }
     }
 
+    @Override
+    protected void onPostResume() {
+        super.onPostResume();
+        getEventFromCalendarApi();
+    }
+
     private void getEventFromCalendarApi() {
         if (! isGooglePlayServicesAvailable()) {
             acquireGooglePlayServices();
         } else if (! isDeviceOnline()) {
+            // TODO: Error no connection
             Log.e(TAG, "No network connection available.");
         } else {
             new MakeRequestTask(mCredential).execute();
@@ -102,8 +109,7 @@ public class HomeActivity extends BaseActivity {
      * @return true if the device has a network connection, false otherwise.
      */
     private boolean isDeviceOnline() {
-        ConnectivityManager connMgr =
-                (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
+        ConnectivityManager connMgr = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
         NetworkInfo networkInfo = connMgr.getActiveNetworkInfo();
         return (networkInfo != null && networkInfo.isConnected());
     }
@@ -114,10 +120,8 @@ public class HomeActivity extends BaseActivity {
      *     date on this device; false otherwise.
      */
     private boolean isGooglePlayServicesAvailable() {
-        GoogleApiAvailability apiAvailability =
-                GoogleApiAvailability.getInstance();
-        final int connectionStatusCode =
-                apiAvailability.isGooglePlayServicesAvailable(this);
+        GoogleApiAvailability apiAvailability = GoogleApiAvailability.getInstance();
+        final int connectionStatusCode = apiAvailability.isGooglePlayServicesAvailable(this);
         return connectionStatusCode == ConnectionResult.SUCCESS;
     }
 
@@ -126,10 +130,8 @@ public class HomeActivity extends BaseActivity {
      * Play Services installation via a user dialog, if possible.
      */
     private void acquireGooglePlayServices() {
-        GoogleApiAvailability apiAvailability =
-                GoogleApiAvailability.getInstance();
-        final int connectionStatusCode =
-                apiAvailability.isGooglePlayServicesAvailable(this);
+        GoogleApiAvailability apiAvailability = GoogleApiAvailability.getInstance();
+        final int connectionStatusCode = apiAvailability.isGooglePlayServicesAvailable(this);
         if (apiAvailability.isUserResolvableError(connectionStatusCode)) {
             showGooglePlayServicesAvailabilityErrorDialog(connectionStatusCode);
         }
@@ -141,8 +143,7 @@ public class HomeActivity extends BaseActivity {
      * @param connectionStatusCode code describing the presence (or lack of)
      *     Google Play Services on this device.
      */
-    void showGooglePlayServicesAvailabilityErrorDialog(
-            final int connectionStatusCode) {
+    void showGooglePlayServicesAvailabilityErrorDialog(final int connectionStatusCode) {
         GoogleApiAvailability apiAvailability = GoogleApiAvailability.getInstance();
         Dialog dialog = apiAvailability.getErrorDialog(
                 HomeActivity.this,
@@ -152,11 +153,6 @@ public class HomeActivity extends BaseActivity {
     }
 
     //region Clicked Listener
-
-    @OnClick(R.id.musics_button)
-    public void onMusicsButtonClicked() {
-        getEventFromCalendarApi();
-    }
 
     //endregion
 
@@ -219,13 +215,13 @@ public class HomeActivity extends BaseActivity {
 
         @Override
         protected void onPreExecute() {
-            mProgress.show();
+            cardViewFlipper.setDisplayedChild(LOADING_VIEW);
         }
 
         @Override
         protected void onPostExecute(Event event) {
-            mProgress.hide();
             if (event != null) {
+                cardViewFlipper.setDisplayedChild(EVENT_VIEW);
                 eventTitleView.setText(event.getSummary());
                 // Subtitle as Start Date and location
 
@@ -240,13 +236,14 @@ public class HomeActivity extends BaseActivity {
                 eventDetailView.setText(event.getDescription());
             }
             else {
+                // TODO: Error no Event
                 Log.e(TAG, "There is no next event");
             }
         }
 
         @Override
         protected void onCancelled() {
-            mProgress.hide();
+            // TODO: Error unknown
             if (mLastError != null) {
                 if (mLastError instanceof GooglePlayServicesAvailabilityIOException) {
                     showGooglePlayServicesAvailabilityErrorDialog(

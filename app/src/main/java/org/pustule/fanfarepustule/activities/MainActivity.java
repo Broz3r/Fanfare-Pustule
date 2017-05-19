@@ -38,9 +38,9 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.OnClick;
 
-public class HomeActivity extends BaseActivity {
+public class MainActivity extends BaseActivity {
 
-    private static final String TAG = HomeActivity.class.getSimpleName();
+    private static final String TAG = MainActivity.class.getSimpleName();
 
     static final int REQUEST_GOOGLE_PLAY_SERVICES = 1002;
 
@@ -60,7 +60,7 @@ public class HomeActivity extends BaseActivity {
 
     @Override
     protected int getLayoutRes() {
-        return R.layout.activity_home;
+        return R.layout.activity_main;
     }
 
     @Override
@@ -150,7 +150,7 @@ public class HomeActivity extends BaseActivity {
     void showGooglePlayServicesAvailabilityErrorDialog(final int connectionStatusCode) {
         GoogleApiAvailability apiAvailability = GoogleApiAvailability.getInstance();
         Dialog dialog = apiAvailability.getErrorDialog(
-                HomeActivity.this,
+                MainActivity.this,
                 connectionStatusCode,
                 REQUEST_GOOGLE_PLAY_SERVICES);
         dialog.show();

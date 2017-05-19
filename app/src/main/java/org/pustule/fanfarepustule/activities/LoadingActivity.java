@@ -43,7 +43,7 @@ public class LoadingActivity extends BaseActivity {
     }
 
     private void launchHomeActivity() {
-        final Intent intent = new Intent(this, HomeActivity.class);
+        final Intent intent = new Intent(this, MainActivity.class);
 
         final String transitionName = getString(R.string.transition_string_loading_home);
         ActivityOptionsCompat options =

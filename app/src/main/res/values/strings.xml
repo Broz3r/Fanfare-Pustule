@@ -10,9 +10,6 @@
 
     <string name="home_subtitle">La fanfare qui decapsule !</string>
 
-    <string name="home_button_sheets">Sheets</string>
-    <string name="home_button_musics">Musics</string>
-
     <string name="home_button_retry">Retry</string>
     <string name="home_button_lets_go">Let\'s go !</string>
 
